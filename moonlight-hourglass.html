@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Moonlight Hourglass 月光沙漏：霧川鎮的四份報告</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#121735;--night2:#1c2350;--moon:#f2c66d;--moon2:#ffe7a8;
+  --bg:#efe8d8;--panel:#fffaf0;--ink:#1d1b2e;--muted:#6a6577;--line:#ddd2bb;
+  --jade:#22806b;--jade-bg:#dff1ea;--red:#c0402a;--red-bg:#f9e1dc;--btn:#1c2350;--btn2:#2c3675;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0b0e20;--panel:#171b33;--ink:#ece8dc;--muted:#a7a2b5;--line:#2c3256;
+  --jade:#5fd0b0;--jade-bg:#123128;--red:#f08a74;--red-bg:#3a1c17;--btn:#f2c66d;--btn2:#ffe7a8;}}
+:root[data-theme="dark"]{--bg:#0b0e20;--panel:#171b33;--ink:#ece8dc;--muted:#a7a2b5;--line:#2c3256;
+  --jade:#5fd0b0;--jade-bg:#123128;--red:#f08a74;--red-bg:#3a1c17;--btn:#f2c66d;--btn2:#ffe7a8;}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.6;font-size:16px}
+header{background:var(--night);color:#fff}
+.hd{max-width:980px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.ttl{font-family:"Noto Serif TC","Songti TC",serif;font-weight:900;font-size:clamp(22px,3.4vw,32px);line-height:1.15;margin:0;color:var(--moon2)}
+.ttl small{display:block;font-weight:600;font-size:14px;color:#c6c9e6;letter-spacing:.04em}
+.sand{display:flex;align-items:center;gap:10px;font-size:13px;color:#c6c9e6}
+.grains{display:flex;gap:5px}
+.grain{width:11px;height:11px;border-radius:50%;background:var(--moon);box-shadow:0 0 8px rgba(242,198,109,.7);transition:all .5s}
+.grain.gone{background:transparent;box-shadow:none;border:1.5px solid #4b5389;transform:translateY(6px)}
+main{max-width:980px;margin:0 auto;padding:16px 20px 60px}
+.stage{position:relative;border-radius:10px;overflow:hidden;background:var(--night);aspect-ratio:960/340}
+.stage svg{display:block;width:100%;height:100%}
+.chap{position:absolute;left:12px;top:10px;color:#fff;background:rgba(13,17,41,.72);padding:4px 12px;border-radius:6px;font-family:"Noto Serif TC",serif;font-weight:600;font-size:clamp(13px,2vw,17px);text-shadow:0 1px 6px rgba(0,0,0,.6);opacity:0;transition:opacity .6s}
+.chap.on{opacity:1}
+.dlg{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin-top:12px;padding:14px 18px;display:flex;gap:14px;min-height:118px}
+.av{flex:0 0 52px;height:52px;border-radius:50%;display:grid;place-items:center;font-family:"Noto Serif TC",serif;font-weight:900;font-size:22px;color:#fff}
+.who{font-weight:700;font-size:14px;margin:0}
+.who span{font-weight:400;color:var(--muted)}
+.en{margin:2px 0 0;font-size:17px}
+.zh{display:block;color:var(--muted);font-size:15px;margin-top:3px}
+.row{display:flex;justify-content:flex-end;margin-top:10px}
+.btn{font:inherit;font-weight:500;background:var(--btn);color:var(--panel);border:0;border-radius:8px;padding:9px 18px;cursor:pointer}
+.btn:hover{background:var(--btn2)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn:focus-visible,.opt:focus-visible,.card:focus-visible,.food:focus-visible,.chip:focus-visible,.ev:focus-visible{outline:3px solid #6f8cff;outline-offset:2px}
+.task{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin-top:12px;padding:16px 18px}
+.task h3{font-family:"Noto Serif TC",serif;font-weight:600;font-size:19px;margin:0 0 4px}
+.task p.lead{margin:0 0 12px}
+.opts{display:grid;gap:9px}
+.opt{text-align:left;font:inherit;color:var(--ink);background:var(--panel);border:1.5px solid var(--line);border-radius:8px;padding:9px 13px;cursor:pointer;line-height:1.45}
+.opt:hover:not(:disabled){border-color:var(--btn2)}
+.opt .zh{font-size:14px}
+.opt.right{border-color:var(--jade);background:var(--jade-bg);animation:pulse .5s}
+.opt.wrong{border-color:var(--red);background:var(--red-bg);animation:shake .4s}
+.opt:disabled{cursor:default}
+.fb{margin-top:10px;padding:10px 13px;border-radius:8px;display:none}
+.fb.show{display:block}.fb.good{background:var(--jade-bg)}.fb.bad{background:var(--red-bg)}
+.fb .zh{font-size:14px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.card{font:inherit;text-align:left;color:var(--ink);background:var(--panel);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;line-height:1.4}
+.card b{font-size:15px}
+.card .meta{font-size:13.5px;margin-top:4px}
+.card .meta .zh{font-size:12.5px}
+.tag{display:inline-block;margin-top:8px;font-size:13px;font-weight:700;border-radius:20px;padding:2px 10px;border:1.5px solid var(--line);color:var(--muted)}
+.card.case .tag{border-color:var(--red);color:var(--red)}
+.card.not .tag{border-color:var(--jade);color:var(--jade)}
+.card.ok{box-shadow:0 0 0 3px var(--jade) inset}.card.bad{box-shadow:0 0 0 3px var(--red) inset}
+.card .why{font-size:13px;margin-top:6px;display:none}.card .why.show{display:block}
+.crit{background:var(--bg);border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:14.5px}
+.chart{width:100%;height:auto;display:block}
+.ev{cursor:pointer}
+.ev:hover circle{stroke-width:4}
+.foods{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:12px}
+.food{font:inherit;color:var(--ink);background:var(--panel);border:1.5px dashed var(--line);border-radius:10px;padding:10px;cursor:pointer;text-align:center;line-height:1.35;min-height:88px}
+.food.seen{border-style:solid;border-color:var(--btn2)}
+.food .ic{font-size:26px;display:block}
+.food small{display:block;color:var(--muted);font-size:12.5px}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;margin:6px 0 12px}
+.tblw{overflow-x:auto}
+.tbl th,.tbl td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:center;white-space:nowrap}
+.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl tr.hot td{background:var(--red-bg);font-weight:700}
+.claim{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.claim .qt{margin:0 0 8px;font-style:italic}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:14px;color:var(--ink);background:var(--panel);border:1.5px solid var(--line);border-radius:20px;padding:5px 12px;cursor:pointer}
+.chip.right{border-color:var(--jade);background:var(--jade-bg)}.chip.wrong{border-color:var(--red);background:var(--red-bg)}
+.chip:disabled{cursor:default}
+.worlds{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:12px 0}
+.world{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.world h4{margin:0;font-size:15px}
+.dots{display:grid;grid-template-columns:repeat(15,1fr);gap:4px;margin:10px 0 6px}
+.dt{aspect-ratio:1;border-radius:50%;background:#c9c3b3;transition:background .5s,transform .5s}
+.dt.ill{background:var(--red)}
+.count{font-size:26px;font-family:"Noto Serif TC",serif;font-weight:900}
+.overlay{position:fixed;inset:0;background:radial-gradient(circle at 50% 45%,#2a3270,#0b0e22 70%);z-index:50;display:none;place-items:center;color:#fff;text-align:center}
+.overlay.on{display:grid}
+.overlay p{font-family:"Noto Serif TC",serif;font-size:22px;margin:16px 0 0}
+.overlay span{display:block;color:var(--moon2);font-size:16px;margin-top:6px}
+.clock{width:150px;height:150px}
+.hand{transform-origin:75px 75px;animation:rewind 1.6s cubic-bezier(.5,0,.5,1) forwards}
+.hand.m{animation-duration:1.6s;animation-name:rewind2}
+@keyframes rewind{to{transform:rotate(-720deg)}}
+@keyframes rewind2{to{transform:rotate(-2880deg)}}
+.fwd .hand{animation-name:fwd}.fwd .hand.m{animation-name:fwd2}
+@keyframes fwd{to{transform:rotate(720deg)}}@keyframes fwd2{to{transform:rotate(2880deg)}}
+.toast{position:fixed;left:50%;top:80px;transform:translateX(-50%);background:var(--night);color:var(--moon2);padding:8px 16px;border-radius:20px;font-weight:500;z-index:60;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.on{opacity:1}
+.intro{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:22px;margin-top:12px}
+.intro h2,.end h2{font-family:"Noto Serif TC",serif;font-weight:900;font-size:26px;margin:0 0 8px}
+.end{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:22px;margin-top:12px}
+.rank{font-family:"Noto Serif TC",serif;font-weight:900;font-size:40px;line-height:1.15;color:var(--btn2)}
+.recap{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:14px 0}
+.recap div{border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:14.5px}
+.recap b{display:block}
+.recap svg{width:170px;max-width:100%;height:auto;display:block;margin-bottom:4px}
+.hide{display:none!important}
+.crack{animation:crack .8s ease forwards}
+@keyframes crack{30%{transform:rotate(-4deg)}60%{transform:rotate(4deg)}100%{transform:rotate(0)}}
+@keyframes pulse{50%{transform:scale(1.02)}}
+@keyframes shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.twinkle{animation:tw 3s ease-in-out infinite}
+@keyframes tw{50%{opacity:.25}}
+.steam{animation:steam 4s ease-in-out infinite}
+@keyframes steam{0%{transform:translateY(0);opacity:.6}100%{transform:translateY(-30px);opacity:0}}
+.glow{animation:glow 2.4s ease-in-out infinite}
+@keyframes glow{50%{opacity:.55}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:600px){main{padding:12px 12px 50px}.dlg{padding:12px}.av{flex-basis:40px;height:40px;font-size:17px}.en{font-size:16px}}
+
+.opt.dg{display:flex;gap:12px;align-items:center}
+.opt.dg svg{flex:0 0 150px;height:auto}
+.rep{background:var(--bg);border-left:5px solid var(--btn2);border-radius:0 8px 8px 0;padding:10px 14px;margin:0 0 12px;font-size:15.5px}
+.rep b{display:block;font-family:"Noto Serif TC",serif;font-size:16px;margin-bottom:2px}
+.pool{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 14px;min-height:40px}
+.sc{font:inherit;font-size:14px;text-align:left;color:var(--ink);background:var(--panel);border:1.5px solid var(--line);border-radius:8px;padding:7px 10px;cursor:pointer;max-width:340px;line-height:1.4}
+.sc .zh{font-size:12.5px}
+.sc.sel{border-color:var(--btn2);box-shadow:0 0 0 3px rgba(111,140,255,.35)}
+.sc.placed{border-color:var(--jade);background:var(--jade-bg);cursor:default;pointer-events:none}
+.sc.wrong{animation:shake .4s}
+.bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.bin{font:inherit;color:var(--ink);text-align:left;background:var(--bg);border:2px dashed var(--line);border-radius:10px;padding:10px;cursor:pointer;min-height:120px;display:flex;flex-direction:column;gap:6px}
+.bin:hover{border-color:var(--btn2)}
+.bin h4{margin:0;font-size:15px}
+.bin .zh{font-size:12.5px}
+@media (max-width:560px){.opt.dg{flex-direction:column;align-items:flex-start}.opt.dg svg{flex-basis:auto;width:170px}}
+</style>
+</head>
+<body>
+<header><div class="hd">
+  <h1 class="ttl">The Moonlight Hourglass<small>月光沙漏 · Four Reports from Mist River 霧川鎮的四份報告</small></h1>
+  <div class="sand" aria-live="polite"><div><b style="color:#fff;font-weight:500">Time sand 時光砂</b><div class="grains" id="grains"></div></div></div>
+</div></header>
+<main>
+  <div class="stage" id="stage"><div id="scene"></div><div class="chap" id="chap"></div></div>
+  <section class="intro" id="intro">
+    <h2>Four studies. Four journeys through time.</h2>
+    <p>Four research reports land on the Mist River Health Bureau's desk, each claiming a discovery. With a mysterious Moonlight Hourglass, you can travel to the moments when each study's data were really created, and see what went wrong.<span class="zh">霧川鎮衛生局收到四份研究報告，每份都宣稱有重大發現。藉由神秘的月光沙漏，妳可以穿越到每項研究資料真正產生的時刻，看看哪裡出了問題。</span></p>
+    <p>You'll face a cross-sectional study, a case-control study, a retrospective cohort and a prospective cohort. Each has its own way of travelling through time, and its own biases and limitations. Every wrong answer costs a grain of time sand.<span class="zh">妳將面對橫斷性研究、病例對照研究、回溯性世代研究與前瞻性世代研究。每種設計穿越時間的方式不同，偏差與限制也不同。每答錯一次，就會耗費一粒時光砂。</span></p>
+    <p style="font-size:14px;color:var(--muted)">About 20 minutes · Four reports plus a final challenge · All characters, places and data are fictional.<span class="zh">約 20 分鐘 · 四份報告＋最終挑戰 · 所有人物、地點與數據皆為虛構。</span></p>
+    <button class="btn" id="startBtn">Begin 開始</button>
+  </section>
+  <section class="dlg hide" id="dlg" aria-live="polite">
+    <div class="av" id="av"></div>
+    <div style="flex:1"><p class="who" id="who"></p><p class="en" id="en"></p><span class="zh" id="zh"></span>
+      <div class="row"><button class="btn" id="cont">Continue 繼續 ▸</button></div></div>
+  </section>
+  <section class="task hide" id="task"></section>
+  <section class="end hide" id="end"></section>
+</main>
+<div class="overlay" id="ov"><div>
+  <svg class="clock" viewBox="0 0 150 150" id="clk"><circle cx="75" cy="75" r="68" fill="none" stroke="#f2c66d" stroke-width="4"/>
+  <line class="hand" x1="75" y1="75" x2="75" y2="35" stroke="#ffe7a8" stroke-width="6" stroke-linecap="round"/>
+  <line class="hand m" x1="75" y1="75" x2="75" y2="20" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="75" cy="75" r="6" fill="#f2c66d"/></svg>
+  <p id="ovT"></p><span id="ovS"></span></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const MAXS=10;let sand=MAXS,pc=0;
+
+const P={
+ hsu:{n:"Dr. Hsu",z:"許主任",c:"#2c5f8a",i:"許"},
+ an:{n:"An (you)",z:"小安（妳）",c:"#b0503a",i:"安"},
+ moon:{n:"Grandma Moon",z:"月婆婆",c:"#7a5aa6",i:"月"},
+ doc:{n:"Dr. Lo",z:"羅醫師",c:"#3f7d5c",i:"羅"},
+ lee:{n:"Mr. Lee",z:"李先生",c:"#8a6d3b",i:"李"},
+ wu:{n:"Mrs. Wu",z:"吳太太",c:"#a64b6b",i:"吳"},
+ tsai:{n:"Mrs. Tsai",z:"蔡太太",c:"#4b6ba6",i:"蔡"},
+ clerk:{n:"Personnel clerk",z:"人事課職員",c:"#6b6b6b",i:"職"},
+ old:{n:"Dr. Hsu, ten years older",z:"十年後的許主任",c:"#46607a",i:"許"},
+ nar:{n:"",z:"",c:"#1c2350",i:"⌛"}
+};
+
+/* ---------- scenes ---------- */
+function stars(n){let s="";for(let i=0;i<n;i++){const x=(i*137)%960,y=(i*71)%150+8,r=(i%3)*.6+.8;s+=`<circle class="twinkle" style="animation-delay:${(i%7)*.4}s" cx="${x}" cy="${y}" r="${r}" fill="#fff"/>`}return s}
+const person=(x,y,c,s=1)=>`<g transform="translate(${x},${y}) scale(${s})"><circle cx="20" cy="18" r="16" fill="${c}"/><path d="M-2 90 q4-50 22-52 q18 2 22 52z" fill="${c}"/></g>`;
+const year=t=>`<g><rect x="836" y="18" width="104" height="40" rx="6" fill="#0d1129" opacity=".8"/><text x="888" y="45" text-anchor="middle" font-size="20" font-weight="700" fill="#ffe7a8">${t}</text></g>`;
+const SC={
+office:()=>`<svg viewBox="0 0 960 340" preserveAspectRatio="xMidYMid slice"><rect width="960" height="340" fill="#dfe9ee"/><rect y="250" width="960" height="90" fill="#c3d2da"/>
+<rect x="80" y="50" width="220" height="140" rx="6" fill="#f7fbfd" stroke="#9db3bf" stroke-width="4"/><line x1="190" y1="50" x2="190" y2="190" stroke="#9db3bf" stroke-width="4"/><line x1="80" y1="120" x2="300" y2="120" stroke="#9db3bf" stroke-width="4"/>
+<rect x="380" y="200" width="460" height="24" rx="4" fill="#7b5a3c"/><rect x="400" y="224" width="14" height="60" fill="#7b5a3c"/><rect x="806" y="224" width="14" height="60" fill="#7b5a3c"/>
+${["#c0402a","#2c5f8a","#22806b","#9a7a1a"].map((c,i)=>`<g transform="translate(${430+i*95},${150-i*6}) rotate(${-6+i*4})"><rect width="76" height="52" rx="4" fill="${c}"/><rect x="10" y="12" width="50" height="5" fill="#fff" opacity=".7"/><rect x="10" y="24" width="36" height="5" fill="#fff" opacity=".7"/><text x="62" y="46" font-size="14" font-weight="900" fill="#fff">${i+1}</text></g>`).join("")}
+${person(860,150,"#2c5f8a",1.1)}</svg>`,
+shop:()=>`<svg viewBox="0 0 960 340" preserveAspectRatio="xMidYMid slice"><rect width="960" height="340" fill="#3a2516"/><rect y="250" width="960" height="90" fill="#2a1a0f"/>
+${[0,1,2].map(r=>`<rect x="60" y="${50+r*70}" width="360" height="8" fill="#6b4528"/>`+[0,1,2,3,4,5].map(i=>`<rect x="${75+i*56}" y="${16+r*70}" width="32" height="34" rx="6" fill="${["#8a5a3a","#5a7a5a","#9a7a4a","#6a5a8a"][(i+r)%4]}" opacity=".85"/>`).join("")).join("")}
+<rect x="520" y="210" width="380" height="50" fill="#6b4528"/><circle cx="700" cy="120" r="90" fill="#f2c66d" opacity=".18" class="glow"/>
+<g transform="translate(670,60)"><rect x="0" y="0" width="60" height="8" rx="3" fill="#c99a4a"/><rect x="0" y="142" width="60" height="8" rx="3" fill="#c99a4a"/><path d="M6 8 L54 8 L32 75 L54 142 L6 142 L28 75 Z" fill="#fff6dc" opacity=".35" stroke="#e8d3a0" stroke-width="2"/><path d="M14 22 L46 22 L32 64 Z" fill="#f2c66d"/><path d="M14 142 L46 142 L32 110 Z" fill="#f2c66d"/></g>
+${person(800,110,"#24160c")}</svg>`,
+fair:()=>`<svg viewBox="0 0 960 340" preserveAspectRatio="xMidYMid slice"><rect width="960" height="340" fill="#cfe6f5"/><circle cx="120" cy="70" r="40" fill="#fff3c4"/><rect y="250" width="960" height="90" fill="#bfcfb2"/>
+<rect x="300" y="60" width="380" height="50" rx="6" fill="#22806b"/><text x="490" y="94" text-anchor="middle" font-size="24" fill="#fff" font-weight="700">Health Fair 健康博覽會</text>
+<rect x="320" y="110" width="8" height="140" fill="#6b6b6b"/><rect x="652" y="110" width="8" height="140" fill="#6b6b6b"/><rect x="360" y="200" width="260" height="20" fill="#fff"/><rect x="370" y="220" width="10" height="40" fill="#999"/><rect x="600" y="220" width="10" height="40" fill="#999"/>
+${[0,1,2,3,4].map(i=>person(700+i*48,150,["#5b6f8a","#8a6d3b","#6a5a8a","#3f7d5c","#a64b6b"][i],.9)).join("")}
+<g transform="translate(450,170)"><rect width="70" height="24" rx="3" fill="#ddd"/><text x="35" y="17" text-anchor="middle" font-size="12" fill="#333">BMI</text></g></svg>`,
+consult:()=>`<svg viewBox="0 0 960 340" preserveAspectRatio="xMidYMid slice"><rect width="960" height="340" fill="#e7efe9"/><rect y="250" width="960" height="90" fill="#cbd8cf"/>
+<rect x="360" y="190" width="300" height="20" rx="4" fill="#8a6a4a"/><rect x="380" y="210" width="12" height="50" fill="#8a6a4a"/><rect x="628" y="210" width="12" height="50" fill="#8a6a4a"/>
+<rect x="120" y="60" width="140" height="100" rx="6" fill="#fff" stroke="#9fb9b1" stroke-width="3"/><text x="190" y="118" text-anchor="middle" font-size="18" fill="#3f7d5c">♥ BP 145/92</text>
+${person(300,140,"#3f7d5c",1.1)}${person(690,130,"#8a6d3b",1.25)}<g transform="translate(560,160)"><rect width="22" height="34" rx="4" fill="#c0402a"/><text x="11" y="23" text-anchor="middle" font-size="10" fill="#fff">0</text></g>${year("2024")}</svg>`,
+home:()=>`<svg viewBox="0 0 960 340" preserveAspectRatio="xMidYMid slice"><rect width="960" height="340" fill="#f3e6d4"/><rect y="250" width="960" height="90" fill="#d9c3a5"/>
+<rect x="90" y="60" width="200" height="130" rx="6" fill="#cfe6f5" stroke="#b08d66" stroke-width="6"/><rect x="420" y="150" width="200" height="12" fill="#b08d66"/>
+<g transform="translate(470,104)"><rect width="22" height="46" rx="5" fill="#2f8f5a"/><rect x="6" y="-8" width="10" height="10" fill="#333"/></g><text x="470" y="140" font-size="10" fill="#fff" transform="rotate(-90 486 128)"></text>
+<rect x="680" y="60" width="90" height="100" fill="#fff" stroke="#b08d66" stroke-width="3"/><text x="725" y="96" text-anchor="middle" font-size="14" fill="#a64b6b" font-weight="700">2018</text><text x="725" y="120" text-anchor="middle" font-size="12" fill="#666">Month 4</text>
+${person(300,140,"#a64b6b",1.15)}<ellipse cx="324" cy="208" rx="16" ry="14" fill="#a64b6b"/>${person(560,140,"#4b6ba6",1.15)}<ellipse cx="584" cy="208" rx="16" ry="14" fill="#4b6ba6"/>${year("2018")}</svg>`,
+interview:()=>`<svg viewBox="0 0 960 340" preserveAspectRatio="xMidYMid slice"><rect width="960" height="340" fill="#2b2f45"/><rect y="250" width="960" height="90" fill="#1f2235"/>
+<circle cx="480" cy="40" r="160" fill="#ffe7a8" opacity=".12"/><rect x="330" y="200" width="300" height="18" fill="#6b5640"/><rect x="460" y="182" width="40" height="18" rx="3" fill="#222"/><circle cx="470" cy="191" r="4" fill="#c0402a"/>
+${person(250,140,"#a64b6b",1.15)}${person(650,140,"#c9a24b",1.15)}<rect x="60" y="60" width="120" height="70" rx="4" fill="#3a3f5c"/><text x="120" y="102" text-anchor="middle" font-size="14" fill="#ffe7a8">Interview 訪談</text>${year("2026")}</svg>`,
+factory:()=>`<svg viewBox="0 0 960 340" preserveAspectRatio="xMidYMid slice"><rect width="960" height="340" fill="#d8d3c8"/><rect y="250" width="960" height="90" fill="#a9a396"/>
+<rect x="60" y="120" width="300" height="130" fill="#7c7466"/><rect x="250" y="40" width="34" height="80" fill="#6a6356"/><circle class="steam" cx="267" cy="30" r="14" fill="#fff" opacity=".5"/>
+<rect x="90" y="90" width="120" height="30" fill="#c0402a"/><text x="150" y="111" text-anchor="middle" font-size="16" fill="#fff" font-weight="700">Building C</text>
+<rect x="480" y="90" width="400" height="160" fill="#efe9dd" stroke="#8a8172" stroke-width="3"/><rect x="520" y="180" width="220" height="16" fill="#8a6a4a"/>
+${[0,1,2].map(i=>`<rect x="${770+i*30}" y="${150-i*4}" width="26" height="40" fill="#e3d2a8" stroke="#a08a5a"/>`).join("")}${person(600,110,"#6b6b6b",1.05)}
+<text x="680" y="120" font-size="14" fill="#555">Personnel 人事課</text>${year("2005")}</svg>`,
+future:()=>`<svg viewBox="0 0 960 340" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="fs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a1440"/><stop offset="1" stop-color="#4a3a7a"/></linearGradient></defs>
+<rect width="960" height="340" fill="url(#fs)"/>${stars(30)}<circle cx="160" cy="80" r="40" fill="#ffe7a8"/>
+${[0,1,2,3,4,5,6,7,8].map(i=>`<rect x="${40+i*100}" y="${150-((i*53)%90)}" width="70" height="${200+((i*53)%90)}" fill="#120e2c"/>`+[0,1,2].map(j=>`<rect x="${52+i*100}" y="${170-((i*53)%90)+j*30}" width="12" height="10" fill="#f2c66d" opacity=".7"/>`).join("")).join("")}
+<rect x="380" y="200" width="200" height="60" rx="8" fill="#2a2458" stroke="#8f86d6"/><text x="480" y="236" text-anchor="middle" font-size="16" fill="#e0dcff">Cohort clinic 世代追蹤門診</text>${year("2036")}</svg>`
+};
+function scene(k){$("scene").innerHTML=SC[k]()}
+function chap(t){const c=$("chap");c.classList.remove("on");c.innerHTML=t;requestAnimationFrame(()=>requestAnimationFrame(()=>c.classList.add("on")))}
+function drawSand(){$("grains").innerHTML=Array.from({length:MAXS},(_,i)=>`<span class="grain ${i>=sand?'gone':''}"></span>`).join("")}
+function lose(){if(sand>0){sand--;drawSand();toast("−1 time sand 時光砂 −1")}else toast("The hourglass is empty… 沙漏已空…")}
+function toast(t){const e=$("toast");e.textContent=t;e.classList.add("on");setTimeout(()=>e.classList.remove("on"),1600)}
+function jump(t,s,back,done){const o=$("ov");$("ovT").textContent=t;$("ovS").textContent=s;$("clk").classList.toggle("fwd",!back);
+  o.querySelectorAll(".hand").forEach(h=>{h.style.animation="none";void h.offsetWidth;h.style.animation=""});o.classList.add("on");setTimeout(()=>{o.classList.remove("on");done()},RM?400:1900)}
+
+/* ---------- mini timelines ---------- */
+let MID=0;
+function mini(k){
+  const id="m"+(++MID);
+  const tok=(x,t,c)=>`<circle cx="${x}" cy="26" r="11" fill="${c}"/><text x="${x}" y="30" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">${t}</text>`;
+  let s=`<svg viewBox="0 0 200 64" aria-hidden="true"><defs><marker id="${id}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2c3675"/></marker></defs><line x1="10" y1="50" x2="190" y2="50" stroke="#b7ad98" stroke-width="2"/>`;
+  [[30,"Past"],[100,"Now"],[170,"Future"]].forEach(([x,l])=>{s+=`<line x1="${x}" y1="46" x2="${x}" y2="54" stroke="#8a8170"/><text x="${x}" y="63" text-anchor="middle" font-size="9" fill="#8a8170">${l}</text>`});
+  const E="#b9770e",D="#c0402a";
+  if(k==="cs")s+=`<rect x="74" y="11" width="52" height="30" rx="8" fill="none" stroke="#2c3675" stroke-dasharray="4 3"/>`+tok(88,"E",E)+tok(112,"D",D);
+  if(k==="cc")s+=tok(100,"D",D)+tok(30,"E",E)+`<line x1="87" y1="26" x2="45" y2="26" stroke="#2c3675" stroke-width="2.5" marker-end="url(#${id})"/>`;
+  if(k==="rc")s+=tok(30,"E",E)+tok(100,"D",D)+`<line x1="43" y1="26" x2="85" y2="26" stroke="#2c3675" stroke-width="2.5" marker-end="url(#${id})"/>`;
+  if(k==="pc")s+=tok(100,"E",E)+tok(170,"D",D)+`<line x1="113" y1="26" x2="155" y2="26" stroke="#2c3675" stroke-width="2.5" marker-end="url(#${id})"/>`;
+  return s+`</svg>`;
+}
+const DESIGNS=[["cs","Cross-sectional study","橫斷性研究"],["cc","Case-control study","病例對照研究"],["rc","Retrospective cohort study","回溯性世代研究"],["pc","Prospective cohort study","前瞻性世代研究"]];
+
+/* ---------- questions ---------- */
+const Q={
+ c1d:{h:"Report 1 · The Sweetener Survey 報告一 · 代糖調查",rep:["At the March health fair, 2,000 adults answered a questionnaire about artificial-sweetener use and had their BMI measured on the same day. Sweetener users were 1.8 times as likely to have obesity. The report concludes: 'Sweeteners cause obesity.'","三月的健康博覽會上，2,000 位成人填寫了人工代糖使用問卷，並在同一天測量 BMI。使用代糖者肥胖的比例是未使用者的 1.8 倍。報告結論：「代糖導致肥胖。」"],
+  lead:["Which design is this?","這是哪一種研究設計？"],design:1,c:"cs",
+  ex:{cs:["Correct. Exposure and outcome were measured at the same moment, a snapshot. It estimates prevalence (prevalence ratio 1.8).","正確。暴露與結果在同一時間點測量，就像一張快照，估計的是盛行率（盛行率比 1.8）。"],
+   cc:["A case-control study would start by selecting people with and without obesity, then look back at past sweetener use.","病例對照研究會先選出有與沒有肥胖的人，再回溯過去的代糖使用。"],
+   rc:["No historical records were used; everything was measured on one day.","沒有使用歷史紀錄，所有資料都在同一天測量。"],
+   pc:["Nobody was followed over time.","沒有任何人被長期追蹤。"]}},
+ c1b:{h:"What did you witness? 妳看到了什麼？",lead:["Mr. Lee is one of the 'sweetener users with obesity' in the survey. What problem does his story reveal?","李先生是調查中「使用代糖且肥胖」的其中一人。他的故事揭露了什麼問題？"],c:"rev",
+  o:[["rev","Reverse causation: obesity led to sweetener use, not the other way round","反向因果：是肥胖導致使用代糖，而非相反"],["rec","Recall bias","回憶偏差"],["ltf","Loss to follow-up","失去追蹤"],["hwe","Healthy worker effect","健康工人效應"]],
+  ex:{rev:["Correct. Because exposure and outcome are measured together, a cross-sectional study cannot show which came first (temporal ambiguity). People with obesity are often advised to switch to sweeteners.","正確。橫斷性研究同時測量暴露與結果，無法確定何者先發生（時序不明）。肥胖者常被建議改用代糖。"],
+   rec:["Sweetener use was asked about as current use, and Mr. Lee reported it accurately.","問卷問的是目前使用情況，李先生的回答是正確的。"],ltf:["Nobody was followed, so nobody could be lost.","沒有人被追蹤，自然不會失去追蹤。"],hwe:["This is a community survey, not a comparison of workers with the general population.","這是社區調查，並非比較工人與一般族群。"]}},
+ c1n:{h:"A second puzzle 第二個謎題",lead:["The same survey found that people currently living with 'Mist River fibrosis', a rapidly fatal lung disease, were less likely to be heavy smokers than expected. Why?","同一調查發現，目前患有「霧川纖維化」（一種快速致命的肺病）的人，重度吸菸的比例低於預期。為什麼？"],c:"ney",
+  o:[["ney","Heavy smokers who got the disease died quickly, so they were missing from the survey (prevalence–incidence bias)","重度吸菸的患者很快死亡，所以不在調查中（盛行率－發生率偏差）"],["pro","Heavy smoking protects against the disease","重度吸菸能預防此病"],["rec","Patients forgot how much they smoked","病人忘記自己抽多少菸"],["int","Interviewers asked smokers fewer questions","訪員問吸菸者較少問題"]],
+  ex:{ney:["Correct. A cross-sectional study counts prevalent cases, which over-represent people who survive longer with the disease. Rapidly fatal cases are under-counted (also called Neyman or survival bias).","正確。橫斷性研究計算的是現有病例，存活較久的人比例偏高，快速死亡的病例被低估（又稱 Neyman 偏差或存活偏差）。"],
+   pro:["The pattern can arise purely because of who survives long enough to be surveyed.","這個現象可能只是因為誰存活得夠久才被調查到。"],rec:["Even with perfect recall, the patients who died could never be interviewed.","即使記憶完全正確，已死亡的病人也不可能受訪。"],int:["Nothing in the survey suggests unequal questioning.","調查中沒有跡象顯示訪問不一致。"]}},
+ c1f:{h:"Fix the study 修正研究",lead:["Which study would best test whether sweeteners cause obesity?","哪一種研究最能檢驗代糖是否導致肥胖？"],c:"pc",
+  o:[["pc","Enrol adults without obesity, record their sweetener use, and follow their weight for several years","招募沒有肥胖的成人，記錄代糖使用，並追蹤體重數年"],["big","Repeat the same survey with 20,000 people","以 20,000 人重做同樣的調查"],["ask","Ask people with obesity when they started using sweeteners","詢問肥胖者何時開始使用代糖"],["young","Survey only people aged 20 to 30","只調查 20 至 30 歲的人"]],
+  ex:{pc:["Correct. Starting with people free of the outcome and measuring exposure first establishes temporality: a prospective cohort.","正確。從沒有結果的人開始、先測量暴露，才能確立時序：這是前瞻性世代研究。"],
+   big:["A larger sample gives more precision, but still can't show which came first.","樣本變大提高精確度，但仍無法確定何者先發生。"],ask:["It helps a little, but it relies on memory and still starts from people who already have the outcome.","有一點幫助，但仰賴記憶，而且仍從已有結果的人出發。"],young:["Narrowing the age range doesn't solve the timing problem.","縮小年齡範圍無法解決時序問題。"]}},
+
+ c2d:{h:"Report 2 · The Mothers' Memory 報告二 · 母親的記憶",rep:["Childhood leukaemia is rare. In 2026, researchers recruited 120 mothers of children with leukaemia and 240 mothers of children without leukaemia, and interviewed them about household insecticide use during pregnancy years earlier. Odds ratio = 3.2.","兒童白血病很罕見。2026 年，研究者招募 120 位白血病兒童的母親與 240 位未罹病兒童的母親，訪談她們多年前懷孕期間的家用殺蟲劑使用情況。勝算比 = 3.2。"],
+  lead:["Which design is this?","這是哪一種研究設計？"],design:1,c:"cc",
+  ex:{cc:["Correct. It starts from the outcome (cases vs controls) and looks back at exposure. It's an efficient design for a rare disease.","正確。從結果（病例與對照）出發、回溯暴露，是研究罕見疾病的有效率設計。"],
+   cs:["Exposure happened years before the outcome, and participants were selected by disease status.","暴露發生在結果之前多年，且依疾病狀態選取對象。"],rc:["A cohort would select by exposure, not by whether the child has leukaemia.","世代研究依暴露選取，而不是依孩子是否罹患白血病。"],pc:["Nobody was followed forward from pregnancy.","沒有人從懷孕期開始往前追蹤。"]}},
+ c2b:{h:"What did you witness? 妳看到了什麼？",lead:["In 2018, both mothers sprayed about once a month. In 2026, Mrs. Wu said 'every week' and Mrs. Tsai said 'never'. What is this?","2018 年，兩位母親都大約每月噴一次。到了 2026 年，吳太太說「每週」，蔡太太說「從來沒有」。這是什麼？"],c:"rec",
+  o:[["rec","Recall bias: differential misreporting of past exposure by case status","回憶偏差：病例與對照對過去暴露的差異性誤報"],["sel","Selection bias from how controls were chosen","對照選取方式造成的選樣偏差"],["rev","Reverse causation","反向因果"],["nd","Non-differential misclassification","無差異錯誤分類"]],
+  ex:{rec:["Correct. The case mother searched her memory for a cause and over-reported; the control mother had no reason to remember and under-reported. The error depends on case status, so it's differential.","正確。病例母親努力尋找原因而高報，對照母親沒有理由記得而低報。誤差取決於病例狀態，屬於差異性錯誤分類。"],
+   sel:["Both mothers were appropriate participants; the problem is in what they reported.","兩位母親都是合適的研究對象，問題出在她們的報告內容。"],rev:["Leukaemia in the child could not have caused spraying during pregnancy.","孩子的白血病不可能導致懷孕期間噴藥。"],nd:["The errors go in opposite directions depending on case status, so they are differential.","誤差方向隨病例狀態而不同，屬於差異性。"]}},
+ c2r:{h:"Which way does it push? 偏差往哪個方向？",lead:["What does this recall bias most likely do to the odds ratio of 3.2?","這種回憶偏差最可能對勝算比 3.2 造成什麼影響？"],c:"up",
+  o:[["up","Overestimates it (biased away from the null)","高估（偏離虛無值）"],["down","Underestimates it (biased toward the null)","低估（偏向虛無值）"],["none","No effect, because both groups were interviewed the same way","沒有影響，因為兩組用同樣方式訪談"],["any","It cannot have any predictable direction","不可能有可預測的方向"]],
+  ex:{up:["Correct. Exposure is inflated among cases and deflated among controls, so the OR is pushed upwards. The true OR might be near 1.","正確。病例組的暴露被高估、對照組被低估，使 OR 被推高，真正的 OR 可能接近 1。"],
+   down:["That's typical of non-differential misclassification. Here cases over-report, so the OR rises.","那是無差異錯誤分類的典型情況。這裡病例高報，所以 OR 上升。"],none:["Same questions, but different memories: the bias comes from the respondents.","問題相同，但記憶不同，偏差來自受訪者。"],any:["With cases over-reporting and controls under-reporting, the direction is predictable: upwards.","病例高報、對照低報，方向是可預測的：往上。"]}},
+ c2f:{h:"Fix the study 修正研究",lead:["What would best reduce this problem?","什麼方法最能減少這個問題？"],c:"rec",
+  o:[["rec","Use exposure information recorded during pregnancy, before anyone knew which child would get leukaemia","使用懷孕期間的紀錄，那時還沒有人知道哪個孩子會罹病"],["more","Recruit more case mothers","招募更多病例母親"],["pc","Switch to a prospective cohort of 500 pregnant women","改為 500 位孕婦的前瞻性世代研究"],["hosp","Recruit controls from the same hospital","從同一家醫院招募對照"]],
+  ex:{rec:["Correct. Records made before the outcome (e.g., prenatal care notes) can't be distorted by knowledge of the disease. Structured questionnaires and memory aids for both groups also help.","正確。在結果發生前留下的紀錄（例如產檢紀錄）不會被疾病知識扭曲。對兩組使用結構式問卷與記憶輔助也有幫助。"],
+   more:["More participants means more precision, not less recall bias.","更多受試者只提升精確度，無法減少回憶偏差。"],pc:["Leukaemia is so rare that 500 women would produce almost no cases. That's exactly why a case-control design was chosen.","白血病極罕見，500 位孕婦幾乎不會產生病例，這正是選擇病例對照設計的原因。"],hosp:["Changing where controls come from doesn't change how mothers remember.","改變對照來源，不會改變母親的記憶方式。"]}},
+ c2i:{h:"The mayor's question 鎮長的問題",lead:["The mayor asks: 'So what percentage of children whose mothers sprayed got leukaemia?' Can this study answer?","鎮長問：「那麼母親有噴藥的孩子中，有多少百分比罹患白血病？」這項研究能回答嗎？"],c:"no",
+  o:[["no","No. The researchers chose the ratio of cases to controls, so risk can't be calculated; only the odds ratio","不能。病例與對照的比例是研究者決定的，無法計算風險，只能算勝算比"],["yes","Yes: exposed cases divided by all exposed mothers","可以：暴露病例除以所有暴露母親"],["big","Only if the sample were larger","只有樣本更大才行"],["x2","Yes, after multiplying by 2 because there were twice as many controls","可以，因為對照是病例的兩倍，乘以 2 即可"]],
+  ex:{no:["Correct. In a case-control study the proportion with disease is set by design (here 1:2), so incidence or risk can't be estimated directly; the OR is the measure.","正確。病例對照研究中，罹病比例由設計決定（此處 1:2），無法直接估計發生率或風險，只能用 OR。"],
+   yes:["That proportion reflects the 1:2 sampling ratio the researchers chose, not the real risk.","那個比例反映研究者選擇的 1:2 抽樣比，而非真實風險。"],big:["Sample size doesn't change the fact that cases were deliberately over-sampled.","樣本大小改變不了病例被刻意超額抽樣的事實。"],x2:["Without knowing the size of the source population, no simple correction gives the risk.","不知道來源族群大小，就沒有簡單的修正方法能得到風險。"]}},
+
+ c3d:{h:"Report 3 · The Factory Files 報告三 · 工廠檔案",rep:["In 2026, researchers used 2005 personnel records from Mist River Chemical to classify 3,000 workers as exposed or unexposed to solvent X by job title, then linked them to the cancer registry for 2005–2025. Rate ratio = 1.1: 'no meaningful effect'.","2026 年，研究者利用霧川化工 2005 年的人事紀錄，依職稱將 3,000 名工人分為溶劑 X 暴露或未暴露，再與 2005–2025 年的癌症登記串聯。率比 = 1.1：「沒有明顯影響」。"],
+  lead:["Which design is this?","這是哪一種研究設計？"],design:1,c:"rc",
+  ex:{rc:["Correct. Exposure comes from past records and outcomes have already occurred, but the logic still runs from exposure to outcome.","正確。暴露來自過去紀錄、結果已經發生，但邏輯仍是從暴露走向結果。"],
+   cc:["Workers were selected by exposure (job title), not by cancer status.","工人是依暴露（職稱）選取，而非依是否罹癌。"],cs:["Exposure (2005) and outcomes (2005–2025) were at different times.","暴露（2005）與結果（2005–2025）發生在不同時間。"],pc:["The researchers started in 2026 and looked at events that had already happened.","研究者 2026 年才開始，看的是已經發生的事件。"]}},
+ c3b:{h:"What did you witness? 妳看到了什麼？",lead:["In 2005, the clerk labelled all Building C line workers as 'office'. What problem does this create?","2005 年，職員把 C 棟所有產線工人都登記為「辦公室」。這會造成什麼問題？"],c:"mis",
+  o:[["mis","Exposure misclassification from inaccurate historical records","歷史紀錄不正確造成的暴露錯誤分類"],["rec","Recall bias","回憶偏差"],["ltf","Loss to follow-up","失去追蹤"],["rev","Reverse causation","反向因果"]],
+  ex:{mis:["Correct. Retrospective cohorts depend on records that were collected for other purposes, and those records may be incomplete or inaccurate.","正確。回溯性世代研究依賴為其他目的而收集的紀錄，這些紀錄可能不完整或不正確。"],
+   rec:["Nobody was asked to remember anything; the error is in the records.","沒有人需要回憶，錯誤出在紀錄本身。"],ltf:["Registry linkage captured everyone; the problem is how exposure was recorded.","登記串聯涵蓋了所有人，問題在於暴露的登記方式。"],rev:["Job titles in 2005 could not be caused by cancers diagnosed later.","2005 年的職稱不可能由之後診斷的癌症造成。"]}},
+ c3r:{h:"Which way does it push? 偏差往哪個方向？",lead:["Is this misclassification differential or non-differential, and what does it most likely do to the rate ratio?","這是差異性還是無差異錯誤分類？最可能對率比造成什麼影響？"],c:"nd",
+  o:[["nd","Non-differential (recorded in 2005, long before anyone got cancer) → biases the rate ratio toward the null","無差異（2005 年登記，遠早於任何人罹癌）→ 使率比偏向虛無值"],["d","Differential → biases it away from the null","差異性 → 使率比偏離虛無值"],["ndup","Non-differential → biases it away from the null","無差異 → 使率比偏離虛無值"],["none","No bias, because the records are official","沒有偏差，因為是官方紀錄"]],
+  ex:{nd:["Correct. Exposed workers were mixed into the 'unexposed' group regardless of later disease, so the groups look more alike. The true effect may be larger than 1.1.","正確。暴露工人被混入「未暴露」組，且與日後是否罹病無關，使兩組看起來更相似。真正的效應可能大於 1.1。"],
+   d:["The clerk's shortcut had nothing to do with who later got cancer, so it is non-differential.","職員的偷懶與日後誰罹癌無關，所以是無差異性。"],ndup:["Mixing exposed people into the unexposed group dilutes the contrast, which pushes toward 1, not away.","把暴露者混入未暴露組會稀釋對比，使結果往 1 靠近，而非遠離。"],none:["Official records can still be wrong.","官方紀錄仍可能出錯。"]}},
+ c3h:{h:"One more claim 另一個主張",lead:["The report adds: 'Workers had 20% lower cancer mortality than the general population (SMR 0.8), so the factory is healthy.' What is the main problem?","報告補充：「工人的癌症死亡率比一般族群低 20%（SMR 0.8），所以工廠很健康。」主要問題是什麼？"],c:"hwe",
+  o:[["hwe","Healthy worker effect: people healthy enough to be employed are healthier than the general population","健康工人效應：能就業的人本來就比一般族群健康"],["pro","Solvent X protects against cancer","溶劑 X 能預防癌症"],["rec","Recall bias","回憶偏差"],["eco","Ecological fallacy","生態謬誤"]],
+  ex:{hwe:["Correct. The general population includes people too ill to work, so workers look healthier. A better comparison is unexposed workers in the same company (an internal comparison group).","正確。一般族群包含病重而無法工作的人，使工人看起來較健康。較好的比較對象是同公司的未暴露工人（內部比較組）。"],
+   pro:["The lower SMR is easily explained by who gets and keeps a job.","較低的 SMR 很容易由誰能就業並持續工作來解釋。"],rec:["Mortality came from registry data, not memory.","死亡率來自登記資料，而非記憶。"],eco:["The comparison uses individual workers' records, not group-level averages.","比較使用的是個別工人的紀錄，而非群體平均。"]}},
+
+ c4d:{h:"Report 4 · The Ten-Year Promise 報告四 · 十年之約",rep:["A plan starting this year: researchers will enrol 3,000 pregnant women, record their usual late-night eating, and follow their children's weight until age 10.","今年開始的計畫：研究者將招募 3,000 位孕婦，記錄她們平常的深夜進食習慣，並追蹤孩子的體重直到 10 歲。"],
+  lead:["Which design is this?","這是哪一種研究設計？"],design:1,c:"pc",
+  ex:{pc:["Correct. Exposure is measured now, before the outcome, and participants are followed into the future.","正確。暴露在結果發生前的現在測量，並往未來追蹤參與者。"],
+   rc:["No historical records are used; the data don't exist yet.","沒有使用歷史紀錄，資料尚未產生。"],cc:["Mothers are selected before anyone knows the children's outcomes.","母親在孩子結果未知時就被選入。"],cs:["Exposure and outcome are measured years apart.","暴露與結果的測量相隔多年。"]}},
+ c4b:{h:"What did you witness? 妳看到了什麼？",lead:["In 2036, only 1,800 of 3,000 families remain. Most who left were night-shift families with late-night eating, whose children were often overweight. What is this?","2036 年，3,000 個家庭只剩 1,800 個。離開的多為有深夜進食習慣的夜班家庭，他們的孩子常常過重。這是什麼？"],c:"ltf",
+  o:[["ltf","Selection bias from differential loss to follow-up","差異性失去追蹤造成的選樣偏差"],["rec","Recall bias","回憶偏差"],["rev","Reverse causation","反向因果"],["hwe","Healthy worker effect","健康工人效應"]],
+  ex:{ltf:["Correct. Loss to follow-up is the classic weakness of long cohorts. When it is related to both exposure and outcome, the remaining sample is no longer representative.","正確。失去追蹤是長期世代研究的典型弱點。當它同時與暴露和結果相關，留下的樣本就不再具代表性。"],
+   rec:["Exposure was recorded during pregnancy, so memory isn't involved.","暴露在懷孕期間記錄，與記憶無關。"],rev:["Late-night eating was measured before the children's weight outcome.","深夜進食在孩子體重結果之前就已測量。"],hwe:["This is about who dropped out of the study, not workers compared with the general population.","這是關於誰退出研究，不是工人與一般族群的比較。"]}},
+ c4r:{h:"Which way does it push? 偏差往哪個方向？",lead:["The families who left were mostly exposed, and their children often had the outcome. What is the likely effect on the final RR of 1.2?","離開的家庭多為暴露者，且孩子常有結果。對最終 RR 1.2 可能有什麼影響？"],c:"down",
+  o:[["down","Underestimated: many exposed cases are missing","低估：許多暴露的病例遺失了"],["up","Overestimated","高估"],["none","No effect: dropouts are always random","沒有影響：退出總是隨機的"],["pros","No bias is possible in a prospective study","前瞻性研究不可能有偏差"]],
+  ex:{down:["Correct. Losing exposed children who became overweight lowers the observed risk in the exposed group, pulling the RR toward 1. The true effect may be stronger.","正確。失去暴露且過重的孩子，會降低暴露組的觀察風險，使 RR 往 1 靠近，真正效應可能更強。"],
+   up:["That would happen if mainly unexposed cases dropped out. Here it was the opposite.","若主要是未暴露的病例退出才會高估，這裡情況相反。"],none:["Here the dropouts clearly differ from those who stayed.","這裡退出者與留下者明顯不同。"],pros:["Prospective designs avoid recall bias, but they are still vulnerable to selection bias from loss to follow-up.","前瞻性設計能避免回憶偏差，但仍會受失去追蹤的選樣偏差影響。"]}},
+ c4f:{h:"Fix the study 修正研究",lead:["If you could return to the start of the study, what would you do?","如果能回到研究開始時，妳會怎麼做？"],c:"ret",
+  o:[["ret","Plan retention from the start (multiple contacts, flexible visits), then compare dropouts' baseline data and use methods such as inverse probability weighting","一開始就規劃留存策略（多重聯絡方式、彈性訪視），並比較退出者的基線資料，使用逆機率加權等方法"],["rep","Replace dropouts with new families recruited when the children are 10","在孩子 10 歲時招募新家庭取代退出者"],["ign","Analyse only the families who stayed and ignore the dropouts","只分析留下的家庭，忽略退出者"],["short","Shorten follow-up to age 2","把追蹤縮短到 2 歲"]],
+  ex:{ret:["Correct. Prevention (strong retention) is best, and baseline data on everyone allow you to assess and partly correct for selective dropout.","正確。預防（強化留存）最好；擁有所有人的基線資料，才能評估並部分校正選擇性退出。"],
+   rep:["New families lack exposure data from pregnancy, so they can't join the original cohort.","新家庭沒有懷孕期的暴露資料，無法加入原世代。"],ign:["That is exactly what produces the bias.","這正是造成偏差的原因。"],short:["Obesity may not appear by age 2, so this changes the research question rather than fixing the bias.","2 歲時肥胖可能尚未出現，這是改變研究問題而非修正偏差。"]}}
+};
+function qTask(id){
+  const q=Q[id];const opts=q.design?DESIGNS:q.o;
+  task(`<h3>${q.h}</h3>${q.rep?`<div class="rep"><b>Report summary 報告摘要</b>${q.rep[0]}<span class="zh">${q.rep[1]}</span></div>`:""}<p class="lead"><b>${q.lead[0]}</b><span class="zh">${q.lead[1]}</span></p><div class="opts" id="qo"></div><div class="fb" id="qfb"></div>`);
+  const host=$("qo");
+  host.innerHTML=opts.map(([k,e,z])=>`<button class="opt ${q.design?'dg':''}" data-k="${k}">${q.design?mini(k):""}<span>${e}<span class="zh">${z}</span></span></button>`).join("");
+  host.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const k=b.dataset.k,ok=k===q.c,f=$("qfb"),x=q.ex[k];
+    f.className="fb show "+(ok?"good":"bad");f.innerHTML=`${x[0]}<span class="zh">${x[1]}</span>`;
+    if(!ok){lose();b.classList.add("wrong");b.disabled=true;return}
+    host.querySelectorAll(".opt").forEach(o=>o.disabled=true);b.classList.add("right");
+    $("task").insertAdjacentHTML("beforeend",`<div class="row"><button class="btn" id="tdone">Continue 繼續 ▸</button></div>`);$("tdone").onclick=()=>{$("task").classList.add("hide");next()};});
+}
+
+/* ---------- script ---------- */
+const S=[
+ {sc:"office",ch:"Prologue · Mist River Health Bureau 序章 · 霧川鎮衛生局"},
+ {w:"hsu",e:"An, four research reports landed on my desk this morning, each claiming a discovery about our town. The mayor wants to act on all four by Friday.",z:"小安，今天早上我桌上來了四份研究報告，每份都宣稱對我們鎮有重大發現。鎮長想在星期五前根據這四份報告採取行動。"},
+ {w:"an",e:"Four studies, four different designs. Each one could be hiding a different bias.",z:"四項研究、四種不同設計，每一項都可能藏著不同的偏差。"},
+ {sc:"shop",ch:"An old pharmacy on Lantern Street 燈籠街的老藥鋪"},
+ {w:"moon",e:"Every study is a kind of time travel, child. Some look back, some look forward, some freeze a single moment.",z:"孩子，每一項研究都是一種時光旅行。有的往回看，有的往前看，有的凍結一個瞬間。"},
+ {w:"moon",e:"This Moonlight Hourglass will take you to the moments when each study's data were really made. See what the researchers could not.",z:"這個月光沙漏會帶妳到每項研究資料真正產生的時刻，看見研究者看不到的事。"},
+ {w:"moon",e:"But every wrong judgement costs sand. Choose wisely.",z:"但每一次判斷錯誤都要付出時光砂。謹慎選擇。"},
+ {sc:"fair",ch:"Report 1 · Cross-sectional 報告一 · 橫斷性研究"},
+ {q:"c1d"},
+ {w:"an",e:"The survey met Mr. Lee at the fair: he uses sweeteners and has obesity. But which came first? Let's turn back two years.",z:"調查在博覽會遇到李先生：他使用代糖，也有肥胖。但哪一個先發生？讓我們回到兩年前。"},
+ {jump:["Turning the hourglass back… 沙漏倒轉…","2024 · Dr. Lo's clinic 2024 · 羅醫師診所",true]},
+ {sc:"consult"},
+ {w:"doc",e:"Mr. Lee, your weight and blood pressure are both up. Let's start by cutting sugar. Switch to zero-sugar drinks.",z:"李先生，您的體重和血壓都上升了。先從減糖開始，改喝零糖飲料吧。"},
+ {w:"lee",e:"Zero-sugar from now on, doctor. I promise.",z:"醫師，從現在起我只喝零糖的，我保證。"},
+ {w:"an",e:"So he had obesity before he ever used sweeteners.",z:"所以他在使用代糖之前，就已經肥胖了。"},
+ {jump:["Returning to the present… 回到現在…","2026 · Health Bureau 2026 · 衛生局",false]},
+ {sc:"fair"},
+ {q:"c1b"},{q:"c1n"},{q:"c1f"},
+ {sc:"interview",ch:"Report 2 · Case-control 報告二 · 病例對照研究"},
+ {q:"c2d"},
+ {w:"an",e:"The interviews ask mothers to remember pregnancies from years ago. I'd like to see what they actually did.",z:"訪談要求母親回想多年前的懷孕期。我想親眼看看她們實際上做了什麼。"},
+ {jump:["Turning the hourglass back… 沙漏倒轉…","2018 · Two homes in Mist River 2018 · 霧川鎮的兩個家",true]},
+ {sc:"home"},
+ {w:"nar",e:"You watch two pregnant neighbours for a month. Mrs. Wu sprays insecticide once, near the kitchen. Mrs. Tsai does the same, once, by the balcony.",z:"妳觀察兩位懷孕的鄰居一個月。吳太太在廚房附近噴了一次殺蟲劑，蔡太太也在陽台噴了一次。"},
+ {jump:["Returning to the interviews… 回到訪談…","2026 · Interview room 2026 · 訪談室",false]},
+ {sc:"interview"},
+ {w:"wu",e:"Insecticide? Every week, I'm sure of it. I've thought about it every night since my son got sick.",z:"殺蟲劑？每個星期都噴，我很確定。我兒子生病後，我每晚都在想這件事。"},
+ {w:"tsai",e:"Insecticide during pregnancy? Hmm… no, I don't think I ever used any.",z:"懷孕期間用殺蟲劑？嗯……沒有，我想我從來沒用過。"},
+ {q:"c2b"},{q:"c2r"},{q:"c2f"},{q:"c2i"},
+ {sc:"factory",ch:"Report 3 · Retrospective cohort 報告三 · 回溯性世代研究"},
+ {q:"c3d"},
+ {w:"an",e:"Everything depends on the 2005 personnel records. Who wrote them, and how carefully?",z:"一切都取決於 2005 年的人事紀錄。是誰寫的？寫得有多仔細？"},
+ {jump:["Turning the hourglass back… 沙漏倒轉…","2005 · Mist River Chemical 2005 · 霧川化工",true]},
+ {sc:"factory"},
+ {w:"clerk",e:"Building C staff rotate between the line and the office… too complicated. I'll just write 'office' for all of them. Nobody will ever check.",z:"C 棟的員工在產線和辦公室之間輪調……太複雜了。全部寫「辦公室」就好，反正不會有人查。"},
+ {w:"an",e:"So many workers breathing solvent X every day are recorded as 'unexposed'.",z:"所以許多每天吸入溶劑 X 的工人，被登記成了「未暴露」。"},
+ {jump:["Returning to the present… 回到現在…","2026 · Health Bureau 2026 · 衛生局",false]},
+ {sc:"office"},
+ {q:"c3b"},{q:"c3r"},{q:"c3h"},
+ {sc:"office",ch:"Report 4 · Prospective cohort 報告四 · 前瞻性世代研究"},
+ {q:"c4d"},
+ {w:"hsu",e:"This one hasn't happened yet. It's a plan, and it's my plan. Ten years, 3,000 families.",z:"這一份還沒發生，是一個計畫，而且是我的計畫。十年、3,000 個家庭。"},
+ {w:"an",e:"Then for the first time, the hourglass needs to turn forward.",z:"那麼，沙漏第一次需要往前轉。"},
+ {jump:["Turning the hourglass forward… 沙漏前轉…","2036 · Cohort clinic 2036 · 世代追蹤門診",false]},
+ {sc:"future"},
+ {w:"old",e:"An? You haven't aged a day… Only 1,800 of our 3,000 families are still with us. So many night-shift families moved away for work.",z:"小安？妳一點都沒變老……3,000 個家庭只剩 1,800 個還留在研究中。好多夜班家庭為了工作搬走了。"},
+ {w:"old",e:"And those were mostly the late-night-eating families, whose children were often overweight when we last saw them. Our final RR is only 1.2.",z:"而且離開的多半是有深夜進食習慣的家庭，我們最後見到他們時，孩子常常過重。最終的 RR 只有 1.2。"},
+ {jump:["Returning to the present… 回到現在…","2026 · Health Bureau 2026 · 衛生局",true]},
+ {sc:"office"},
+ {q:"c4b"},{q:"c4r"},{q:"c4f"},
+ {sc:"shop",ch:"Final challenge 最終挑戰"},
+ {w:"moon",e:"Each design travels through time differently, and each leaves different footprints of bias. Show me you can tell them apart.",z:"每種設計穿越時間的方式不同，留下的偏差足跡也不同。證明妳能分辨它們。"},
+ {t:"sort"},
+ {sc:"office",ch:"Epilogue · Friday 尾聲 · 星期五"},
+ {w:"hsu",e:"Thanks to you, the mayor won't act on any of these reports until they're fixed. And my cohort will start with a proper retention plan.",z:"多虧了妳，鎮長在報告修正前不會採取行動。我的世代研究也會從完善的留存計畫開始。"},
+ {w:"an",e:"I'm returning the hourglass. Real epidemiologists can't travel in time, so we choose our designs carefully and name their limitations honestly.",z:"我要把沙漏還回去。真正的流行病學家無法穿越時間，所以我們謹慎選擇設計，並誠實說明它們的限制。"},
+ {t:"end"}
+];
+
+/* ---------- engine ---------- */
+let typing=null;
+function next(){
+  if(pc>=S.length)return;const s=S[pc++];
+  if(s.sc)scene(s.sc);if(s.ch)chap(s.ch);
+  if(s.jump){$("dlg").classList.add("hide");$("task").classList.add("hide");jump(s.jump[0],s.jump[1],s.jump[2],next);return}
+  if(s.w){say(s);return}
+  if(s.q){$("dlg").classList.add("hide");qTask(s.q);return}
+  if(s.t){$("dlg").classList.add("hide");T[s.t]();return}
+  next();
+}
+function say(s){
+  $("task").classList.add("hide");$("dlg").classList.remove("hide");const p=P[s.w];
+  $("av").style.background=p.c;$("av").textContent=p.i;$("who").innerHTML=p.n?`${p.n} <span>${p.z}</span>`:"&nbsp;";
+  $("zh").textContent=s.z;const el=$("en");clearInterval(typing);el.dataset.full=s.e;
+  if(RM){el.textContent=s.e;return}
+  let i=0;el.textContent="";typing=setInterval(()=>{i+=2;el.textContent=s.e.slice(0,i);if(i>=s.e.length)clearInterval(typing)},16);
+}
+$("cont").onclick=()=>{const el=$("en");if(el.textContent.length<(el.dataset.full||"").length){clearInterval(typing);el.textContent=el.dataset.full;return}next()};
+function task(html){const t=$("task");t.innerHTML=html;t.classList.remove("hide");t.scrollIntoView({behavior:RM?"auto":"smooth",block:"nearest"})}
+
+const T={};
+const CARDS=[
+ {b:"cs",e:"Can't tell whether exposure came before the outcome",z:"無法確定暴露是否發生在結果之前"},
+ {b:"cs",e:"Over-represents long-lasting cases (prevalence–incidence bias)",z:"病程長的病例比例偏高（盛行率－發生率偏差）"},
+ {b:"cc",e:"Cases may remember past exposures differently from controls",z:"病例對過去暴露的記憶可能與對照不同"},
+ {b:"cc",e:"Can't directly estimate incidence or risk",z:"無法直接估計發生率或風險"},
+ {b:"rc",e:"Depends on old records that may be incomplete or inaccurate",z:"依賴可能不完整或不正確的舊紀錄"},
+ {b:"rc",e:"Key confounders (e.g., smoking) often weren't recorded",z:"重要干擾因子（如吸菸）常未被記錄"},
+ {b:"pc",e:"Participants drop out over many years of follow-up",z:"多年追蹤期間參與者會流失"},
+ {b:"pc",e:"Slow and costly; inefficient for rare outcomes",z:"耗時昂貴；不適合罕見結果"}
+];
+T.sort=()=>{
+  const order=CARDS.map((c,i)=>i).sort(()=>Math.random()-.5);let sel=null,placed=0;const missed=new Set();
+  task(`<h3>Match each limitation to its design 將限制配對到設計</h3><p class="lead">Tap a card, then tap the design it most affects.<span class="zh">點選一張卡片，再點選它最主要影響的研究設計。</span></p>
+  <div class="pool" id="pool">${order.map(i=>`<button class="sc" data-i="${i}">${CARDS[i].e}<span class="zh">${CARDS[i].z}</span></button>`).join("")}</div>
+  <div class="bins">${DESIGNS.map(([k,e,z])=>`<div class="bin" data-b="${k}" role="button" tabindex="0">${mini(k)}<h4>${e}<span class="zh">${z}</span></h4></div>`).join("")}</div><div class="fb" id="sfb"></div>`);
+  document.querySelectorAll(".sc").forEach(c=>c.onclick=()=>{if(c.classList.contains("placed"))return;document.querySelectorAll(".sc").forEach(x=>x.classList.remove("sel"));c.classList.add("sel");sel=c});
+  const drop=bin=>{if(!sel)return toast("Pick a card first 先選一張卡片");const i=+sel.dataset.i,f=$("sfb");
+    if(CARDS[i].b!==bin.dataset.b){if(!missed.has(i)){missed.add(i);lose()}sel.classList.remove("wrong");void sel.offsetWidth;sel.classList.add("wrong");f.className="fb show bad";f.innerHTML="Not that one. Think about how this design travels through time.<span class=\"zh\">不是這個，想想這種設計如何穿越時間。</span>";return}
+    sel.classList.remove("sel");sel.classList.add("placed");sel.tabIndex=-1;bin.appendChild(sel);sel=null;f.className="fb";
+    if(++placed===CARDS.length){f.className="fb show good";f.innerHTML="All matched! Every design has trade-offs; the right choice depends on the question, the disease and the resources.<span class=\"zh\">全部配對完成！每種設計都有取捨，正確的選擇取決於研究問題、疾病特性與資源。</span>";
+      $("task").insertAdjacentHTML("beforeend",`<div class="row"><button class="btn" id="tdone">Continue 繼續 ▸</button></div>`);$("tdone").onclick=()=>{$("task").classList.add("hide");next()}}};
+  document.querySelectorAll(".bin").forEach(b=>{b.onclick=()=>drop(b);b.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();drop(b)}}});
+};
+T.end=()=>{
+  $("task").classList.add("hide");$("dlg").classList.add("hide");
+  const r=sand>=9?["Master of Time","時光大師"]:sand>=6?["Time Detective","時光偵探"]:sand>=3?["Apprentice Traveller","見習旅人"]:["Lost in the Loop","迷失時光"];
+  const e=$("end");e.classList.remove("hide");
+  const box=(k,t,z,items)=>`<div>${mini(k)}<b>${t} ${z}</b>${items.map(([a,b])=>`${a}<span class="zh">${b}</span>`).join("")}</div>`;
+  e.innerHTML=`<h2>All four reports reviewed 四份報告審查完畢</h2><p>Time sand remaining: <b>${sand} / ${MAXS}</b><span class="zh">剩餘時光砂：${sand} / ${MAXS}</span></p><div class="rank">${r[0]}<span class="zh" style="font-size:22px">${r[1]}</span></div>
+  <div class="recap">
+  ${box("cs","Cross-sectional","橫斷性",[["Snapshot of prevalence. Watch for reverse causation and prevalence–incidence bias.","盛行率的快照。注意反向因果與盛行率－發生率偏差。"]])}
+  ${box("cc","Case-control","病例對照",[["Efficient for rare diseases. Watch for recall bias and control selection; gives OR, not risk.","適合罕見疾病。注意回憶偏差與對照選取；只能得到 OR，無法得到風險。"]])}
+  ${box("rc","Retrospective cohort","回溯性世代",[["Fast use of past records. Watch for inaccurate records, missing confounders and the healthy worker effect.","快速利用過去紀錄。注意紀錄不正確、缺少干擾因子與健康工人效應。"]])}
+  ${box("pc","Prospective cohort","前瞻性世代",[["Clear temporality and planned measurement. Watch for loss to follow-up, cost and rare outcomes.","時序清楚、測量經過規劃。注意失去追蹤、成本與罕見結果。"]])}
+  </div><button class="btn" id="again">Play again 再玩一次</button>`;
+  $("again").onclick=()=>location.reload();e.scrollIntoView({behavior:RM?"auto":"smooth"});
+};
+drawSand();scene("shop");chap("Mist River 霧川鎮");
+$("startBtn").onclick=()=>{$("intro").classList.add("hide");next()};
+</script>
+</body>
+</html>
